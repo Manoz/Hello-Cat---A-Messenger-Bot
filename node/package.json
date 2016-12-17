@@ -1,0 +1,28 @@
+{
+  "name": "hellocat",
+  "version": "1.0.0",
+  "description": "Hello Cat is a simple Facebook Messenger Bot that send cat pictures on demand.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "lint": "jshint --exclude node_modules ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Manoz/Hello-Cat-A-Messenger-Bot.git"
+  },
+  "keywords": [
+    "cats",
+    "facebook",
+    "bot",
+    "node"
+  ],
+  "author": "Manoz",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "1.15.2",
+    "config": "1.24.0",
+    "express": "4.14.0",
+    "request": "2.79.0"
+  }
+}
