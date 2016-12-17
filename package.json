@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "lint": "jshint --exclude node_modules ."
+    "lint": "npm run lint-js",
+    "lint-js": "eslint 'index.js'; exit 0;",
   },
   "repository": {
     "type": "git",
