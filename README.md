@@ -55,6 +55,7 @@ If you want cat pictures, the command is `cat category format`
 ## ☕️ TODO
 
 * [] Refactoring
+* [] Remove jshint > Try ESLint
 * [] Add more interactions
 * [] Add a real `postback` feature like "Another cat"
 
