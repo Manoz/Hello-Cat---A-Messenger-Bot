@@ -58,6 +58,8 @@ If you want cat pictures, the command is `cat category format`
 * ✅ Add a `help` command
 * ✅ Add an answer if the user send an image to the bot
 * [] Refactoring
+  * [] Modules
+  * [] Lodash
 * [] Add more interactions
 * [] Add a Greeting Text containing the bot features
 * [] Add a real `postback` feature like "Another cat"
