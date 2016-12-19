@@ -11,6 +11,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
 const config = require('config');
+const _ = require('lodash');
 
 const app = express();
 
@@ -97,33 +98,52 @@ function sendMessage(recipientId, messageData) {
   });
 }
 
+/*
+ * Used to verify all arguments in the user command
+ *
+*/
+const tests = {
+  keyword: ['cat', 'cats', 'meow'],
+  category: ['hats', 'space', 'sunglasses', 'boxes', 'caturday', 'ties', 'dream', 'sinks', 'clothes'],
+  format: ['jpg', 'png', 'gif'],
+};
+
+function verify(obj) {
+  _.forEach(obj, (value, key) => {
+    if (_.isNil(value) || !_.includes(tests[key], value)) {
+      throw new Error(`🙀 Invalid ${key}. Type "help" for more informations.`);
+    }
+  });
+}
+
 
 /*
  * Send our cat image
  * ==================
+ * @param {string} recipientId - The user ID
+ * @param {string} text - The user message
+ * @param {Object} messageData - The object containing a simple message or a rich message
 */
 function catMessage(recipientId, text) {
-  const theText = text || '';
-  const values = theText.split(' ');
+  const command = text || '';
+  const keys = ['keyword', 'category', 'format'];
+  const values = command.split(' ');
+  const params = _.zipObject(keys, values);
+  const category = String(values[1]);
+  const format = String(values[2]);
 
-  // If we have our 3 values and the 1st one is "cat"
-  if (values.length === 3 && values[0] === 'cat') {
-    const validFormats = ['jpg', 'png', 'gif'];
-    // const validCategory = ['hats', 'space', 'sunglasses', 'boxes', 'caturday', 'ties', 'dream', 'sinks', 'clothes'];
-    const format = values[2];
-    // const category = values[1];
+  console.log(`Keyword is: ${params.keyword}, Category is: ${params.category}, Format is: ${params.format}.`);
 
-    if (typeof format !== 'string' || validFormats.indexOf(format) === -1) {
-      const messageData = {
-        text: '🙀 Wrong image format. Please choose jpg, png or gif',
-      };
+  // Replace YOUR_API_KEY with your api key
+  // Go to http://thecatapi.com/api-key-registration.html to get one
+  // Concat the URL for readability
+  const apiUrl = 'http://thecatapi.com/api/';
+  const catUrl = `${apiUrl}images/get?format=src&api_key=YOUR_API_KEY&category=${category}&type=${format}`;
 
-      sendMessage(recipientId, messageData);
-    } else {
-      // Replace YOUR_API_KEY with your api key
-      // Go to http://thecatapi.com/api-key-registration.html to get one
-      // eslint-disable-next-line max-len
-      const catUrl = `http://thecatapi.com/api/images/get?format=src&api_key=YOUR_API_KEY&category=${String(values[1])}&type=${String(values[2])}`;
+  // If we have our 3 values in the user command
+  if (values.length === 3) {
+    try {
+      verify(params);
 
       const messageData = {
         attachment: {
@@ -132,7 +152,7 @@ function catMessage(recipientId, text) {
             template_type: 'generic',
             elements: [{
               title: 'Meow 😽',
-              subtitle: `Here is your ${String(values[1])} cat`,
+              subtitle: `Here is your ${category} cat`,
               image_url: catUrl,
               buttons: [{
                 type: 'web_url',
@@ -150,12 +170,16 @@ function catMessage(recipientId, text) {
 
       sendMessage(recipientId, messageData);
       console.log(`The cat URL is: ${catUrl}`);
-
-      return true;
+    } catch (e) {
+      const messageData = {
+        text: e.message,
+      };
+      sendMessage(recipientId, messageData);
     }
+    // If we don't have our 3 parameters in the initial command
   } else {
     const messageData = {
-      text: '🙀 The correct command is "cat category format"',
+      text: '🙀 The correct command is "cat category format". Type "help" for more infos.',
     };
 
     sendMessage(recipientId, messageData);
