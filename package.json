@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "lint": "npm run lint-js",
-    "lint-js": "eslint 'index.js'; exit 0;",
+    "lint-js": "eslint 'index.js'; exit 0;"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,8 @@
     "body-parser": "1.15.2",
     "config": "1.24.0",
     "express": "4.14.0",
-    "request": "2.79.0"
+    "request": "2.79.0",
+    "lodash": "^4.17.2"
   },
   "devDependencies": {
     "eslint": "^3.12.2",
