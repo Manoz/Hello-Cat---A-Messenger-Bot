@@ -41,7 +41,7 @@ The bot will interact with you depending on what you say. In the future I will a
 If you want cat pictures, the command is `cat category format`
 
 * cat: the keyword that ask for a cat picture
-* category: the category based on thecatapi.com. Here is the [complete list ](http://thecatapi.com/api/categories/list). Some categories doesn't work so I've made a good const in the app : `const validCategory = ['hats', 'space', 'sunglasses', 'boxes', 'caturday', 'ties', 'dream', 'sinks', 'clothes'];`
+* category: the category based on thecatapi.com. Here is the [complete list ](http://thecatapi.com/api/categories/list). Some categories doesn't work so I've verified all working categories and added them to an array `const tests = { category: ['hats', 'space', 'sunglasses', 'boxes', 'caturday', 'ties', 'dream', 'sinks', 'clothes'] };`. I will add a better way to verify them later.
 * format: jpg, png or gif
 
 **Request example:** cat space gif
