@@ -168,6 +168,8 @@ function catMessage(recipientId, text) {
 /*
  * First API endpoint to process messages
  * ======================================
+ * @param {string} sender - the user ID
+ * @param {Object} events - contains the sender ID (user), recipient ID (page) timestamp and message
 */
 app.post('/webhook/', (req, res) => {
   const events = req.body.entry[0].messaging;
@@ -180,9 +182,16 @@ app.post('/webhook/', (req, res) => {
       const sender = event.sender.id;
 
       if (event.message && event.message.text) {
-        if (!catMessage(sender, event.message.text)) {
+        if (event.message.text === 'help') {
+          // eslint-disable-next-line max-len
+          sendMessage(sender, { text: 'Hi 😺 You can ask for a cat picture using 3 arguments: "keyword category format"\n\nkeyword: cat, cats, meow\n\ncategory, choose a category: hats, space, sunglasses, boxes, caturday, ties, dream, sinks, clothes\n\nformat, choose an image format: jpg, png, gif\n\nFor exemple if you want a gif with a cat in space, type "cat space gif"' });
+        } else if (!catMessage(sender, event.message.text)) {
           sendMessage(sender, { text: `Your request was ${event.message.text}` });
         }
+      // If the user send a picture to the bot
+      } else if (event.message && event.message.attachments) {
+        sendMessage(sender, { text: '😻 Thanks for your image but use the command "cat category format" ;)' });
+      // If there is a postback event and the user click on it (I like this)
       } else if (event.postback) {
         console.log(`Postback received ${JSON.stringify(event.postback)}`);
         sendMessage(sender, { text: 'Yeah, I like this too 😻' });
