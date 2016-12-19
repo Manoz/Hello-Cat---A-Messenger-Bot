@@ -46,6 +46,8 @@ If you want cat pictures, the command is `cat category format`
 
 **Request example:** cat space gif
 
+Users can also type `help` to retrieve a list of categories and format.
+
 ## 💡 Useful links
 
 * This bot uses http://thecatapi.com to find cat images. Go check the [documentation](http://thecatapi.com/docs.html) to see how it works.
