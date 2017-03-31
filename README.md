@@ -56,6 +56,7 @@ Users can also type `help` to retrieve a list of categories and format.
 
 ## ☕️ TODO
 
+* 🥕 Refacto's comming `\o/`
 * ✅ Remove jshint > Try ESLint
 * ✅ Add a `help` command
 * ✅ Add an answer if the user send an image to the bot
